@@ -14,5 +14,9 @@ export default defineConfig({
 			},
 		}),
 	],
-	server: { host: true }
+	server: {
+		allowedHosts: ['ozy.pp.ua'], 
+		host: true,
+		port: 3000,
+	 }
 });
