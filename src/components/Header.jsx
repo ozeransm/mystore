@@ -9,6 +9,9 @@ export function Header() {
 				<a href="/" class={url == '/' && 'active'}>
 					Home
 				</a>
+				<a href="/users" class={url == '/users' && 'active'}>
+					Users
+				</a>
 				<a href="/404" class={url == '/404' && 'active'}>
 					404
 				</a>

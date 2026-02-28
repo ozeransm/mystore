@@ -1,26 +1,28 @@
 import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'preact-iso';
-
 import { Header } from './components/Header.jsx';
 import { Home } from './pages/Home/index.jsx';
+import Users from './pages/Users/users.jsx';
 import { NotFound } from './pages/_404.jsx';
 import './style.css';
 
-export function App() {
+export function App(data) {
+	// console.log("asjdlkjsalkdjlkas",data);
 	return (
-		<LocationProvider>
+		<LocationProvider >
 			<Header />
 			<main>
 				<Router>
 					<Route path="/" component={Home} />
+					<Route path="/users" component={Users} data={data} />
 					<Route default component={NotFound} />
 				</Router>
 			</main>
 		</LocationProvider>
 	);
 }
-
 if (typeof window !== 'undefined') {
-	hydrate(<App />, document.getElementById('app'));
+// @ts-ignore
+	hydrate(<App data={window.__SSR_DATA__ ?? []}/>, document.getElementById('app'));
 }
 
 export async function prerender(data) {
