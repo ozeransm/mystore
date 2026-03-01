@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js'; 
-export const User = sequelize.define('User', 
+export const Product = sequelize.define('Product', 
     { 
     id: { 
             type: DataTypes.INTEGER, 
@@ -8,19 +8,12 @@ export const User = sequelize.define('User',
             autoIncrement: true 
         }, 
     name: DataTypes.STRING, 
-    email: {
-            type: DataTypes.STRING, 
-            unique: true 
-           }, 
-    password: DataTypes.STRING, 
+    price: DataTypes.STRING, 
+    quantity: DataTypes.STRING, 
     description: DataTypes.STRING, 
-    role: {
-            type: DataTypes.STRING, 
-            defaultValue: 'user' 
-          },
     createdAt: DataTypes.TEXT, 
     updatedAt: DataTypes.TEXT }, 
     { 
-        tableName: 'users', 
+        tableName: 'products', 
         timestamps: false 
     });

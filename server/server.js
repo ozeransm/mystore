@@ -6,6 +6,8 @@ import { createServer as createViteServer } from 'vite';
 
 import  sequelize from './db.js';
 import { User } from './models/Users.js';
+import { Product } from './models/Products.js';
+import { Order } from './models/Orders.js';
 
 try {
   await sequelize.authenticate();
@@ -33,14 +35,16 @@ app.use(async (req, res, next) => {
       return next();
     } 
      
-      const users = await User.findAll({ raw: true }); 
+      const users = await User.findAll({ raw: true });
+      const products = await Product.findAll({ raw: true });
+      const orders = await Order.findAll({ raw: true }); 
       let template = await fs.readFile( path.resolve(__dirname, '../index.html'), 'utf-8' ); 
       template = await vite.transformIndexHtml(req.url, template); 
       const { renderPage } = await vite.ssrLoadModule('/server/ssr-entry.jsx'); 
-      const { html } = renderPage(req.url, { users }); 
+      const { html } = renderPage(req.url, { users, products, orders }); 
       const finalHtml = template 
                           .replace('<!--app-html-->', html) 
-                          .replace( '<!--app-data-->', `<script>window.__SSR_DATA__ = ${JSON.stringify({ users })};</script>` );
+                          .replace( '<!--app-data-->', `<script>window.__SSR_DATA__ = ${JSON.stringify({ users, products, orders })};</script>` );
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml); 
     }
     catch (e) 
