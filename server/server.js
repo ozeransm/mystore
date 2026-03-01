@@ -7,6 +7,12 @@ import { createServer as createViteServer } from 'vite';
 import  sequelize from './db.js';
 import { User } from './models/Users.js';
 
+try {
+  await sequelize.authenticate();
+  console.log("✅ Database connected");
+} catch (error) {
+  console.error("❌ DB connection error:", error);
+}
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const users = await User.findAll({ raw: true });
 
