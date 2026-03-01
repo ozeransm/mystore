@@ -14,7 +14,8 @@ try {
   console.error("❌ DB connection error:", error);
 }
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const users = await User.findAll({ raw: true });
+
+await sequelize.sync();
 
 async function start() {
   const app = express();
@@ -24,47 +25,36 @@ async function start() {
     root: path.join(__dirname, '..')
   });
 
-  await sequelize.sync();
-
-  app.get('/users', async (req, res) => {
-    
-    
-    let template = await fs.readFile(
-      path.resolve(__dirname, '../index.html'),
-      'utf-8'
-    );
-    template = await vite.transformIndexHtml(req.url, template);
-    const fullUrl = `${req.protocol}://${req.get('host')}${req.url}`;
-    const { renderPage } = await vite.ssrLoadModule('/server/ssr-entry.jsx');
-    const { html } = renderPage(fullUrl, {users});
-    const finalHtml = template
-                            .replace(`<!--app-html-->`, html) 
-                            .replace(`<!--app-data-->`, 
-                                     `<script>window.__SSR_DATA__ = ${JSON.stringify( {users} )};</script>`);
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
+app.use(async (req, res, next) => { 
+  try { 
+    const accept = req.headers.accept || ''; 
+    const isHtml = req.method === 'GET' && accept.includes('text/html') && !req.originalUrl.match(/\.(js|css|png|jpg|jpeg|svg|ico|map)$/); 
+    if (!isHtml) { 
+      return next();
+    } 
+     
+      const users = await User.findAll({ raw: true }); 
+      let template = await fs.readFile( path.resolve(__dirname, '../index.html'), 'utf-8' ); 
+      template = await vite.transformIndexHtml(req.url, template); 
+      const { renderPage } = await vite.ssrLoadModule('/server/ssr-entry.jsx'); 
+      const { html } = renderPage(req.url, { users }); 
+      const finalHtml = template 
+                          .replace('<!--app-html-->', html) 
+                          .replace( '<!--app-data-->', `<script>window.__SSR_DATA__ = ${JSON.stringify({ users })};</script>` );
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml); 
+    }
+    catch (e) 
+              { vite.ssrFixStacktrace?.(e); 
+                next(e); 
+              } 
   });
 
   app.use(vite.middlewares);
 
-  app.get(/.*/, async (req, res) => {
-    let template = await fs.readFile(
-      path.resolve(__dirname, '../index.html'),
-      'utf-8'
-    );
-
-    template = await vite.transformIndexHtml(req.url, template);
-
-    const { renderPage } = await vite.ssrLoadModule('/server/ssr-entry.jsx');
-    const { html } = renderPage(req.url);
-
-    const finalHtml = template.replace(`<!--app-html-->`, html);
-
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml);
-  });
-
   app.listen(3000, () => {
     console.log('SSR server running at http://localhost:3000');
   });
+
 }
 
 start();

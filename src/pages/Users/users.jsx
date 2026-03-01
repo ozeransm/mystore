@@ -1,8 +1,9 @@
+
 export default function Users(data) {
-    const users = data?.data?.data?.users || [];
-    
-    return (
-        <section>
+  const users = data.data.users || [];
+  
+return (
+<section>
   <h1>Users</h1>
   <table>
     <thead>
