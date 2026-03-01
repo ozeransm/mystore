@@ -13,7 +13,8 @@
 		"preact": "^10.26.9",
 		"preact-iso": "^2.11.1",
 		"preact-render-to-string": "^6.6.6",
-		"sequelize": "^6.37.7"
+		"sequelize": "^6.37.7",
+		"styled-components": "^6.3.11"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.2",

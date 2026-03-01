@@ -8,6 +8,7 @@ import { initialState, reducer } from '../reducer/reducer.js';
 import Products from './pages/Products/index.jsx';
 import Orders from './pages/Orders/index.jsx';
 import Contacts from './pages/Contacts/index.jsx';
+import Login from './pages/Login/index.jsx';
 
 import './style.css';
 
@@ -26,9 +27,10 @@ export function App(data){
                         <Router>
                             <Route path="/" component={Home} />
                             <Route path="/users" component={Users} data={state} />
-                            <Route path="products" component={Products} data={state} />
-                            <Route path="orders" component={Orders} data={state}/>
-                            <Route path="contacts" component={Contacts} />
+                            <Route path="/products" component={Products} data={state} />
+                            <Route path="/orders" component={Orders} data={state}/>
+                            <Route path="/contacts" component={Contacts} />
+                            <Route path="/login" component={Login} />
                             <Route default component={NotFound} />
                         </Router>
                     </main>
