@@ -21,12 +21,16 @@ await sequelize.sync();
 
 async function start() {
   const app = express();
-
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   const vite = await createViteServer({
     server: { middlewareMode: true },
     root: path.join(__dirname, '..')
   });
-
+app.post('/addcard', async (req, res) => {
+  const product = await Product.create(req.body);
+  res.status(200).json(product);
+});
 app.use(async (req, res, next) => { 
   try { 
     const accept = req.headers.accept || ''; 

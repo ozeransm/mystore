@@ -9,16 +9,18 @@ import Products from './pages/Products/index.jsx';
 import Orders from './pages/Orders/index.jsx';
 import Contacts from './pages/Contacts/index.jsx';
 import Login from './pages/Login/index.jsx';
+import Admin from './pages/Admin/index.jsx';
 
 import './style.css';
 
 
-export function App(data){
+export function App({ data }){
     const [state, dispatch] = useReducer(reducer, initialState);
     useEffect(() => {
-        dispatch({ type: 'setUsers', payload: data.data.users });
-        dispatch({ type: 'setProducts', payload: data.data.products });
-        dispatch({ type: 'setOrders', payload: data.data.orders });
+        dispatch({ type: 'setUsers', payload: data.users });
+        dispatch({ type: 'setProducts', payload: data.products });
+        dispatch({ type: 'setOrders', payload: data.orders });
+        // dispatch({ type: 'setOpenModal', payload: false });
     }, []);
     return(
         <LocationProvider >
@@ -30,7 +32,8 @@ export function App(data){
                             <Route path="/products" component={Products} data={state} />
                             <Route path="/orders" component={Orders} data={state}/>
                             <Route path="/contacts" component={Contacts} />
-                            <Route path="/login" component={Login} />
+                            <Route path="/login" component={Login} data={state}/>
+                            <Route path="/x7p9a2lm" component={Admin} data={state} dispatch={dispatch} />
                             <Route default component={NotFound} />
                         </Router>
                     </main>

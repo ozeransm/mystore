@@ -11,9 +11,8 @@ export const Product = sequelize.define('Product',
     price: DataTypes.STRING, 
     quantity: DataTypes.STRING, 
     description: DataTypes.STRING, 
-    createdAt: DataTypes.TEXT, 
-    updatedAt: DataTypes.TEXT }, 
+    }, 
     { 
         tableName: 'products', 
-        timestamps: false 
+        timestamps: true 
     });
