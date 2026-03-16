@@ -27,10 +27,22 @@ async function start() {
     server: { middlewareMode: true },
     root: path.join(__dirname, '..')
   });
+
 app.post('/addcard', async (req, res) => {
   const product = await Product.create(req.body);
   res.status(200).json(product);
 });
+app.put('/editproduct/:id', async (req, res) => {
+  const id = req.params.id;
+  await Product.update(req.body, { where: { id } });
+  res.status(200).json({ message: 'Product updated' });
+});
+app.post('/delproduct/:id', async (req, res) => {
+  const id = req.params.id;
+  await Product.destroy({ where: { id } });
+  res.status(200).json({ message: 'Product deleted' });
+});
+
 app.use(async (req, res, next) => { 
   try { 
     const accept = req.headers.accept || ''; 

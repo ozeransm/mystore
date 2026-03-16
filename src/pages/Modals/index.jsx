@@ -1,5 +1,6 @@
 import { styled } from "goober";
 import AddCards from "../../components/AddCard";
+import EditCards from "../../components/EditCards";
 
 const Overlay = styled("div")`
   position: fixed;
@@ -21,7 +22,7 @@ const ModalWindow = styled("div")`
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 `;
-export default function AddCard({data, dispatch}) {
+export default function Modal({data, dispatch}) {
     function close() {
         dispatch({ type: 'setOpenModal', payload: false });
     }
@@ -30,8 +31,8 @@ export default function AddCard({data, dispatch}) {
             <h2>Add New Product</h2>
                 <Overlay onClick={close}>
                     <ModalWindow onClick={(e) => e.stopPropagation()}>
-                    <AddCards data={data} dispatch={dispatch}/>
-                    
+                    {data.openAddModal && <><h2>Add New Product</h2><AddCards data={data} dispatch={dispatch}/></>}
+                    {data.openEditModal && <><h2>Edit Product</h2><EditCards data={data} dispatch={dispatch}/></>}
                     </ModalWindow>
                 </Overlay>
         </div>

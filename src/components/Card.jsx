@@ -4,7 +4,7 @@ const CardDiv = styled("div")`
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 12px;
-  margin: 10px 0;
+  margin: 10px auto; 
   max-width: 320px;
   display: flex;
   flex-direction: column;
@@ -34,14 +34,19 @@ const Description = styled("p")`
   font-size: 14px;
   color: #555;
 `;
-
-export default function Card({name, price, description, image}) {
+const ButtonDiv = styled("div")`
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+`;
+export default function Card({product, children}) {
     return (
         <CardDiv>
-            <Image src={image} alt={name} />
-            <Title>{name}</Title>
-            <Price>${price.toFixed(2)}</Price>
-            <Description>{description}</Description>
+            <Image src={product.image} alt={product.name} />
+            <Title>{product.name}</Title>
+            <Price>${product.price}</Price>
+            <Description>{product.description}</Description>
+            <ButtonDiv>{children}</ButtonDiv>
         </CardDiv>
     );
 }

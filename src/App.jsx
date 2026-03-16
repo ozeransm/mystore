@@ -17,9 +17,11 @@ import './style.css';
 export function App({ data }){
     const [state, dispatch] = useReducer(reducer, initialState);
     useEffect(() => {
-        dispatch({ type: 'setUsers', payload: data.users });
-        dispatch({ type: 'setProducts', payload: data.products });
-        dispatch({ type: 'setOrders', payload: data.orders });
+        // console.log('Data received in App component:', data);
+        dispatch({ type: 'setAll', payload: data });
+        // dispatch({ type: 'setUsers', payload: data.users });
+        // dispatch({ type: 'setProducts', payload: data.products });
+        // dispatch({ type: 'setOrders', payload: data.orders });
         // dispatch({ type: 'setOpenModal', payload: false });
     }, []);
     return(
