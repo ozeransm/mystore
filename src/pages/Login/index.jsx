@@ -10,7 +10,21 @@ const FormLogin = styled("form")`
     padding: 20px;
    
 `;
-
+const ButtonCard = styled("button")`
+    background-color: #673ab8;
+    color: white;
+    width: 80px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #4e1aaf;
+    }
+`;
 export default function Login(data) {
     const { route } = useLocation();
     const handlerSubmit = (e) => {
@@ -33,7 +47,7 @@ export default function Login(data) {
             <FormLogin onSubmit={handlerSubmit}>
                 <input type="text" id="username" name="username" placeholder="Username" required />
                 <input type="password" id="password" name="password" placeholder="Password" required />
-                <button type="submit">Login</button>
+                <ButtonCard type="submit">Login</ButtonCard>
             </FormLogin>
             
         </section>

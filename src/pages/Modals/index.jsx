@@ -1,6 +1,8 @@
 import { styled } from "goober";
-import AddCards from "../../components/AddCard";
-import EditCards from "../../components/EditCards";
+import AddCardsProduct from "../../components/AddCardProduct";
+import EditCardProduct from "../../components/EditCardProduct";
+import AddCardUser from "../../components/AddCardUser";
+import EditCardUser from "../../components/EditCardUser";
 
 const Overlay = styled("div")`
   position: fixed;
@@ -25,14 +27,20 @@ const ModalWindow = styled("div")`
 export default function Modal({data, dispatch}) {
     function close() {
         dispatch({ type: 'setOpenModal', payload: false });
+        dispatch({ type: 'setOpenAddModalProduct', payload: false });
+        dispatch({ type: 'setOpenEditModalProduct', payload: false });
+        dispatch({ type: 'setOpenAddModalUser', payload: false });
+        dispatch({ type: 'setOpenEditModalUser', payload: false });
     }
     return (
         <div>
             <h2>Add New Product</h2>
                 <Overlay onClick={close}>
                     <ModalWindow onClick={(e) => e.stopPropagation()}>
-                    {data.openAddModal && <><h2>Add New Product</h2><AddCards data={data} dispatch={dispatch}/></>}
-                    {data.openEditModal && <><h2>Edit Product</h2><EditCards data={data} dispatch={dispatch}/></>}
+                    {data.openAddModalProduct && <><h2>Add New Product</h2><AddCardsProduct data={data} dispatch={dispatch}/></>}
+                    {data.openEditModalProduct && <><h2>Edit Product</h2><EditCardProduct data={data} dispatch={dispatch}/></>}
+                    {data.openAddModalUser && <><h2>Add New User</h2><AddCardUser data={data} dispatch={dispatch}/></>}
+                    {data.openEditModalUser && <><h2>Edit User</h2><EditCardUser data={data} dispatch={dispatch}/></>}
                     </ModalWindow>
                 </Overlay>
         </div>

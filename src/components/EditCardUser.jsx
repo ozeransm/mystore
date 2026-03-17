@@ -33,29 +33,31 @@ const ButtonAdd = styled("button")`
         background-color: #4e1aaf;
     }
 `;  
-export default function EditCards({data, dispatch}) {
+export default function EditCardUser({data, dispatch}) {
     async function handlerSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const name = formData.get("name");
-        const price = formData.get("price");
-        const quantity = formData.get("quantity");
+        const email = formData.get("email");
+        const password = formData.get("password");
         const description = formData.get("description");
-        dispatch({ type: 'editProducts', payload: { id: data.editCard.id, name, price, quantity, description } });
-        await fetch("http://localhost:3000/editproduct/" + data.editCard.id, {
+        const role = formData.get("role");
+        dispatch({ type: 'editUser', payload: { id: data.editCard.id, name, email, password, description, role } });
+        await fetch("http://localhost:3000/edituser/" + data.editCard.id, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ name, price, quantity, description })
+            body: JSON.stringify({ name, email, password, description, role })
         })
     }
     return (
         <Form action="submit" onSubmit={handlerSubmit}>
-            <Input type="text" name="name" placeholder="Enter product name" required/>
-            <Input type="text" name="price" placeholder="Enter product price" required />
-            <Input type="text" name="quantity" placeholder="Enter product quantity" required />
-            <Input type="text" name="description" placeholder="Enter product description" required />
+            <Input type="text" name="name" placeholder="Enter user name" required/>
+            <Input type="email" name="email" placeholder="Enter user email" required />
+            <Input type="password" name="password" placeholder="Enter user password" required />
+            <Input type="text" name="description" placeholder="Enter user description" required />
+            <Input type="text" name="role" placeholder="Enter user role" required />
             <ButtonAdd type="submit">Edit Card</ButtonAdd>
         </Form>
     );

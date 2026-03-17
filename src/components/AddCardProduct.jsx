@@ -33,7 +33,7 @@ const ButtonAdd = styled("button")`
         background-color: #4e1aaf;
     }
 `;  
-export default function AddCards({data, dispatch}) {
+export default function AddCardsProduct({data, dispatch}) {
    async function handlerSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);

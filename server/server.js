@@ -27,7 +27,7 @@ async function start() {
     server: { middlewareMode: true },
     root: path.join(__dirname, '..')
   });
-
+// Api products
 app.post('/addcard', async (req, res) => {
   const product = await Product.create(req.body);
   res.status(200).json(product);
@@ -41,6 +41,21 @@ app.post('/delproduct/:id', async (req, res) => {
   const id = req.params.id;
   await Product.destroy({ where: { id } });
   res.status(200).json({ message: 'Product deleted' });
+});
+// API users
+app.post('/adduser', async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(200).json(user);
+});
+app.put('/edituser/:id', async (req, res) => {
+  const id = req.params.id;
+  await User.update(req.body, { where: { id } });
+  res.status(200).json({ message: 'User updated' });
+});
+app.post('/deluser/:id', async (req, res) => {
+  const id = req.params.id;
+  await User.destroy({ where: { id } });
+  res.status(200).json({ message: 'User deleted' });
 });
 
 app.use(async (req, res, next) => { 

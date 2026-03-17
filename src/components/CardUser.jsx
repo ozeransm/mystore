@@ -23,7 +23,7 @@ const Title = styled("h3")`
   font-size: 18px;
 `;
 
-const Price = styled("p")`
+const Email = styled("p")`
   margin: 0;
   font-weight: bold;
   color: #673ab8;
@@ -34,18 +34,24 @@ const Description = styled("p")`
   font-size: 14px;
   color: #555;
 `;
+const Role = styled("p")`
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+`;
 const ButtonDiv = styled("div")`
     display: flex;
     gap: 10px;
     margin-top: 10px;
 `;
-export default function Card({product, children}) {
+export default function CardUser({user, children}) {
     return (
         <CardDiv>
-            <Image src={product.image} alt={product.name} />
-            <Title>{product.name}</Title>
-            <Price>${product.price}</Price>
-            <Description>{product.description}</Description>
+            {/* <Image src={user.image} alt={user.name} /> */}
+            <Title>{user.name}</Title>
+            <Email>${user.email}</Email>
+            <Description>{user.description}</Description>
+            <Role>{user.role}</Role>
             <ButtonDiv>{children}</ButtonDiv>
         </CardDiv>
     );
