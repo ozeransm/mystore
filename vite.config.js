@@ -10,7 +10,11 @@ export default defineConfig({
 		allowedHosts: ['ozy.pp.ua'], 
 		host: true, 
 		port: 3000,
-		hmr: false, 
+		hmr: {
+			protocol: 'wss',  // secure websocket
+			host: 'randomname.cloudflareTunnel.com', // твоє URL Cloudflare Tunnel
+			port: 443      
+		}, 
 	},
 	build: {
       	sourcemap: false, 
