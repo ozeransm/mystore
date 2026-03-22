@@ -33,33 +33,35 @@ const ButtonAdd = styled("button")`
         background-color: #4e1aaf;
     }
 `;  
-export default function AddCardsProduct({data, dispatch}) {
+export default function AddCardOrder({data, dispatch}) {
    async function handlerSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const name = formData.get("name");
-        const price = formData.get("price");
+        const email = formData.get("email");
         const quantity = formData.get("quantity");
         const description = formData.get("description");
-        const res = await fetch("http://localhost:3000/addcard", {
+        const contact = formData.get("contact");
+        const res = await fetch("http://localhost:3000/addorder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ name, price, quantity, description })
+            body: JSON.stringify({ name, email, quantity, description, contact, id_product: 0 })
         });
-        const product = await res.json();
-        dispatch({ type: 'setProducts', payload: { id: product.id, name, price, quantity, description } });
+        const order = await res.json();
+        dispatch({ type: 'setOrders', payload: { id: order.id, name, email, quantity, description, contact } });
         dispatch({ type: 'closeModal' });
-        
+
     }
     return (
       <Form action="submit" onSubmit={handlerSubmit}>
-        <Input type="text" name="name" placeholder="Enter product name" required/>
-        <Input type="text" name="price" placeholder="Enter product price" required />
-        <Input type="text" name="quantity" placeholder="Enter product quantity" required />
-        <Input type="text" name="description" placeholder="Enter product description" required />
-        <ButtonAdd type="submit">Add Product</ButtonAdd>
+        <Input type="text" name="name" placeholder="Enter user name" required/>
+        <Input type="email" name="email" placeholder="Enter user email" required />
+        <Input type="text" name="quantity" placeholder="Enter order quantity" required />
+        <Input type="text" name="description" placeholder="Enter order description" required />
+        <Input type="text" name="contact" placeholder="Enter user contact" required />
+        <ButtonAdd type="submit">Add Order</ButtonAdd>
       </Form>
     );
 }

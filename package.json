@@ -3,7 +3,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node server/server.js",
-		"build": "vite build",
+		"build": "vite build --ssr server/server.js",
 		"preview": "vite preview"
 	},
 	"dependencies": {

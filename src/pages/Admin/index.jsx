@@ -2,6 +2,7 @@ import { styled } from "goober";
 import Modal from "../Modals";
 import CardUser from "../../components/CardUser";
 import CardProduct from "../../components/CardProduct";
+import CardOrder from "../../components/CardOrder";
 
 const CardDiv = styled("div")`
   display: flex;
@@ -44,10 +45,11 @@ const ButtonAdd = styled("button")`
     }
 `;  
 export default function Admin({data, dispatch}) {
+    //Products
     function handlerClickProduct() {
         dispatch({ type: 'setOpenModal', payload: true });
         dispatch({ type: 'setOpenAddModalProduct', payload: true });
-        dispatch({ type: 'setOpenEditModalProduct', payload: false });
+        
     }
     async function handlerDelProduct(id) {
         dispatch({ type: 'delProducts', payload: id });
@@ -58,19 +60,17 @@ export default function Admin({data, dispatch}) {
             }
         })
     }
-    function handlerEditProduct(card) {
+    async function handlerEditProduct(card) {
         dispatch({ type: 'setOpenModal', payload: true });
-        dispatch({ type: 'setOpenAddModalProduct', payload: false });
-
-        dispatch({ type: 'setEditCard', payload: card });
-        dispatch({ type: 'editProducts', payload: card });
         dispatch({ type: 'setOpenEditModalProduct', payload: true });
+        
+        dispatch({ type: 'setEditCard', payload: card });
+        dispatch({ type: 'editProducts', payload: card });        
     }
-
+    //Users
     function handlerClickUser() {
         dispatch({ type: 'setOpenModal', payload: true });
         dispatch({ type: 'setOpenAddModalUser', payload: true });
-        dispatch({ type: 'setOpenEditModalUser', payload: false });
     }
     async function handlerDelUser(id) {
         dispatch({ type: 'delUser', payload: id });
@@ -83,11 +83,31 @@ export default function Admin({data, dispatch}) {
     }
     function handlerEditUser(card) {
         dispatch({ type: 'setOpenModal', payload: true });
-        dispatch({ type: 'setOpenAddModalUser', payload: false });
-
-        dispatch({ type: 'setEditCard', payload: card });
-        dispatch({ type: 'editProducts', payload: card });
         dispatch({ type: 'setOpenEditModalUser', payload: true });
+        
+        dispatch({ type: 'setEditCard', payload: card });
+        dispatch({ type: 'editUser', payload: card });        
+    }
+    //Orders
+    function handlerClickOrder() {
+        dispatch({ type: 'setOpenModal', payload: true });
+        dispatch({ type: 'setOpenAddModalOrder', payload: true });
+    }
+    async function handlerDelOrder(id) {
+        dispatch({ type: 'delOrder', payload: id });
+        await fetch(`http://localhost:3000/delorder/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
+    function handlerEditOrder(card) {
+        dispatch({ type: 'setOpenModal', payload: true });
+        dispatch({ type: 'setOpenEditModalOrder', payload: true });
+        
+        dispatch({ type: 'setEditCard', payload: card });
+        dispatch({ type: 'editOrder', payload: card });        
     }
     return (
         <section>
@@ -115,6 +135,17 @@ export default function Admin({data, dispatch}) {
                     <ButtonCard onClick={() => handlerEditUser(user)}>Edit</ButtonCard>
                     <ButtonCard onClick={() => handlerDelUser(user.id)}>Delete</ButtonCard>
                 </CardUser>
+            ))}
+            </div>
+            <div>
+            <ButtonAdd onClick={handlerClickOrder}>Add Order</ButtonAdd>
+            
+            {data?.orders.map(order => (
+                <CardOrder order={order} key={order.id}>
+                    
+                    <ButtonCard onClick={() => handlerEditOrder(order)}>Edit</ButtonCard>
+                    <ButtonCard onClick={() => handlerDelOrder(order.id)}>Delete</ButtonCard>
+                </CardOrder>
             ))}
             </div>
             </CardDiv>

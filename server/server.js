@@ -57,6 +57,21 @@ app.post('/deluser/:id', async (req, res) => {
   await User.destroy({ where: { id } });
   res.status(200).json({ message: 'User deleted' });
 });
+// API orders
+app.post('/addorder', async (req, res) => {
+  const order = await Order.create(req.body);
+  res.status(200).json(order);
+});
+app.put('/editorder/:id', async (req, res) => {
+  const id = req.params.id;
+  await Order.update(req.body, { where: { id } });
+  res.status(200).json({ message: 'Order updated' });
+});
+app.post('/delorder/:id', async (req, res) => {
+  const id = req.params.id;
+  await Order.destroy({ where: { id } });
+  res.status(200).json({ message: 'Order deleted' });
+}); 
 
 app.use(async (req, res, next) => { 
   try { 
@@ -75,7 +90,7 @@ app.use(async (req, res, next) => {
       const { html } = renderPage(req.url, { users, products, orders }); 
       const finalHtml = template 
                           .replace('<!--app-html-->', html) 
-                          .replace( '<!--app-data-->', `<script>window.__SSR_DATA__ = ${JSON.stringify({ users, products, orders })};</script>` );
+                          .replace( '<!--app-data-->', `window.__SSR_DATA__ = ${JSON.stringify({ users, products, orders })};` );
       res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml); 
     }
     catch (e) 

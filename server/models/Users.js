@@ -18,9 +18,9 @@ export const User = sequelize.define('User',
             type: DataTypes.STRING, 
             defaultValue: 'user' 
           },
-    createdAt: DataTypes.TEXT, 
-    updatedAt: DataTypes.TEXT }, 
+    createdAt: DataTypes.DATE, 
+    updatedAt: DataTypes.DATE }, 
     { 
         tableName: 'users', 
-        timestamps: false 
+        timestamps: true 
     });

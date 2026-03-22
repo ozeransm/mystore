@@ -9,7 +9,7 @@ export const Order = sequelize.define('Order',
         }, 
     name: DataTypes.STRING, 
     email: DataTypes.STRING, 
-    quantity: DataTypes.INTEGER, 
+    quantity: DataTypes.STRING, 
     description: DataTypes.STRING, 
     id_product: DataTypes.STRING,
     contacts: DataTypes.STRING,
@@ -17,5 +17,6 @@ export const Order = sequelize.define('Order',
     updatedAt: DataTypes.DATE }, 
     { 
         tableName: 'orders', 
-        timestamps: false 
+        timestamps: true 
     });
+    

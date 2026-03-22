@@ -48,7 +48,8 @@ export default function EditCardProduct({data, dispatch}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ name, price, quantity, description })
-        })
+        });
+        dispatch({ type: 'closeModal' });
     }
     return (
         <Form action="submit" onSubmit={handlerSubmit}>

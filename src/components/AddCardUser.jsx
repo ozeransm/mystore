@@ -42,14 +42,17 @@ export default function AddCardUser({data, dispatch}) {
         const password = formData.get("password");
         const description = formData.get("description");
         const role = formData.get("role");
-        dispatch({ type: 'setUsers', payload: { name, email, password, description, role } });
-        await fetch("http://localhost:3000/adduser", {
+        const res = await fetch("http://localhost:3000/adduser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ name, email, password, description, role })
-        })
+        });
+        const user = await res.json();
+        dispatch({ type: 'setUsers', payload: { id: user.id, name, email, password, description, role } });
+        dispatch({ type: 'closeModal' });
+
     }
     return (
       <Form action="submit" onSubmit={handlerSubmit}>

@@ -7,7 +7,7 @@ const CardDiv = styled("div")`
   margin: 10px auto; 
   max-width: 320px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 8px;
 `;
 
