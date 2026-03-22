@@ -1,6 +1,6 @@
+import './goober.js';
 import { hydrate, prerender as ssr } from 'preact-iso';
 import {App} from './App.jsx';
-import './goober.js';
 if (typeof window !== 'undefined') {
 // @ts-ignore
 	hydrate(<App data={window.__SSR_DATA__ ?? []}/>, document.getElementById('app'));
